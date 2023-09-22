@@ -1,0 +1,26 @@
+Aplikasi ini berfungsi untuk menyimpan (create), memlihat(read), mengubah Update, dan Mengapus (Delete). CRUD
+
+Untuk Front-End (client)
+http://notesapp-v1.dicodingacademy.com/.
+
+
+Keteria 1: Web Server dapat menyimpan catatan
+
+
+{
+ id: string,
+ title: string,
+ createdAt: string,
+ updatedAt: string,
+ tags: array of string,
+ body: string,
+},
+
+Agar web server dapat menyimpan cattan melalui aplikasi client, web server harus menyediakan route dengan path '/notes' dan method POST,
+Dalam menyimpan atau menambahkan notes, client akan mengirimkan permintaan ke path dan method tersebut dengan membawa data JSON berikut
+
+{
+ "title": "Judul Catatan",
+ "tags": ["Tag 1", "Tag 2"],
+ "body": "Konten catatan"
+}
