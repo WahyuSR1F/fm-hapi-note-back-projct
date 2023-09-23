@@ -24,3 +24,60 @@ Dalam menyimpan atau menambahkan notes, client akan mengirimkan permintaan ke pa
  "tags": ["Tag 1", "Tag 2"],
  "body": "Konten catatan"
 }
+
+Same-Origin Policy
+sebuah origin terdiri dari 3 protokol :
+1. protokol
+2. Host
+3. Portnumber
+
+http://notesapp-v1.dicodingacademy.com
+
+same-origin Policy meberikan keamana bila mana sebuah website diakses dengan origin berbeda secara default membuat server menolak permintaan tersebut dengan begitu aplikasi kita menjeadi gagal.
+
+Bagaimana solusi agar keduanya dapat berinteraksi ?
+terhadap mekanism yang dapat membuat mereka saling berinteraksi yaitu : 
+Cross-Origin Resource Sharing (CORS), dengan nilai origin uar yang akan mengosumsi datanya (aplikasi client)
+// contoh code :
+const response = h.response({ error: false, message: 'Catatan berhasil ditambahkan' });
+ 
+response.header('Access-Control-Allow-Origin', 'http://notesapp-v1.dicodingacademy.com');
+ 
+return response;
+
+anda juga bisa menngunakan tanda bintang (*) pada nilai origin untuk memperbolehkan data dikonsumsi oleh seluruh origin
+
+//contoh code
+const response = h.response({ error: false, message: 'Catatan berhasil ditambahkan' });
+ 
+response.header('Access-Control-Allow-Origin', '*');
+ 
+return response;
+
+
+//Dalam penerapanya lebih muda pada framework Hapi, dengan Hapi cors dapat ditetapkan pada spesifik route dengan menambahkan properti 
+options.cors di konfigurasi route
+// contoh code
+
+{
+  method: 'POST',
+  path: '/notes',
+  handler: addNoteHandler,
+  options: {
+    cors: {
+      origin: ['*'],
+    },
+  },
+},
+
+Bila ingin cakupannya lebih luas alias CORS diaktifkan di seluruh route yang ada di server, Anda bisa tetapkan CORS pada konfigurasi ketika hendak membuat server dengan menambahkan properti routes.cors. Contohnya seperti ini:
+
+const server = Hapi.server({
+  port: 5000,
+  host: 'localhost',
+  routes: {
+    cors: {
+      origin: ['*'],
+    },
+  },
+});
