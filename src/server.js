@@ -8,6 +8,13 @@ const init = async () => {
   const server = Hapi.Server({
     port: 3000,
     host: 'localhost',
+    routes: {
+      // mendambahkan sebuah cors
+      // untuk mengizinkan akses dengan origin lain
+      cors: {
+        origin: ['*'],
+      },
+    },
   });
 
   server.route(routes);
